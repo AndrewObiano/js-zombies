@@ -27,8 +27,8 @@ function Item(name) {
  * @property {number} damage
  */
 function Weapon(name, damage) {
-  this.damage = damage;
   Item.call(this, name);
+  this.damage = damage;
 }
 
 Weapon.prototype = Object.create(Item.prototype);
@@ -91,15 +91,16 @@ function Player(name, health, strength, speed) {
   this.speed = speed;
   this.isAlive = true;
   this.equipped = false;
-  this._pack = [];
-  this._maxHealth = health;
+
+  const pack = [];
+  const maxHealth = health;
 
   this.getPack = function() {
-    return this._pack;
+    return pack;
   };
 
   this.getMaxHealth = function() {
-    return this._maxHealth;
+    return maxHealth;
   };
 }
 /**
@@ -114,7 +115,7 @@ function Player(name, health, strength, speed) {
  * @name checkPack
  */
 Player.prototype.checkPack = function() {
-  return console.log(Player.getPack);
+  return console.log("Your pack has: ", Player.getPack);
 };
 /**
  * Player Class Method => takeItem(item)
@@ -206,8 +207,8 @@ Player.prototype.equip = function(itemToEquip) {
       this.equipped = itemToEquip; // equip the item I want to equip
     } else {
       // if I already have an item equipped
-      this.takeItem(this.equipped); // put the equipped item in the pack
       this.discardItem(itemToEquip); // take the item I want to equip out of the pack
+      this.takeItem(this.equipped); // put the equipped item in the pack
       this.equipped = itemToEquip; // equip the item I want to equip
     }
   }
@@ -236,7 +237,7 @@ Player.prototype.eat = function(itemToEat) {
   if (instance && index >= 0) {
     this.discardItem(itemToEat);
     this.health += itemToEat.energy; // add energy to health
-    if (this.health >= 100) {
+    if (this.health >= this.getMaxHealth()) {
       this.health = this.getMaxHealth(); // set health to max if healing over max
     }
   }
@@ -304,11 +305,12 @@ function Zombie(health, strength, speed) {
   this.health = health;
   this.strength = strength;
   this.speed = speed;
-  this._maxHealth = health;
   this.isAlive = true;
 
+  const maxHealth = health;
+
   this.getMaxHealth = function() {
-    return this._maxHealth;
+    return maxHealth;
   };
 }
 /**
