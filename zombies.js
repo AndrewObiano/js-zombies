@@ -154,14 +154,16 @@ class Player {
     if (this.getPack().length < 3) {
       // check if pack isn't full
       console.log(Player.name + " picked up " + item.name);
-      return this.getPack().push(item); // add item to the pack
+      this.getPack().push(item); // add item to the pack
+      return true;
     } else {
-      return console.log("Pack is full!");
+      console.log("Pack is full!");
+      return false;
     }
   }
 
   discardItem(item) {
-    if (this.getPack().length === 0 || this.getPack().indexOf(item) === -1) {
+    if (this.getPack().indexOf(item) === -1) {
       // can't discard item that you don't have
       console.log("Item is not the pack!");
       return false;
